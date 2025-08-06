@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enzo's Hub</title>
+  <title>Enzo's Status</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,43 +16,41 @@
     </div>
   </div>
 
-  <!-- Status password prompt -->
-  <div id="password-popup" class="glass hidden">
-    <p>Enter password to override status:</p>
-    <input type="password" id="password-input" placeholder="Password..." />
-    <button onclick="checkPassword()">Submit</button>
+  <!-- Manual status override box (hidden until password accepted) -->
+  <div id="manual-status" class="glass hidden">
+    <label for="status-select">Set your status:</label>
+    <select id="status-select" onchange="manualSelect()">
+      <option value="">-- Select --</option>
+      <option value="Online">Online</option>
+      <option value="Sleeping">Sleeping</option>
+      <option value="Offline">Offline</option>
+      <option value="At School">At School</option>
+      <option value="On Break">On Break</option>
+    </select>
+    <button onclick="resetToAuto()">Back to Auto Mode</button>
   </div>
-
-  <!-- Manual override dropdown -->
-  <select id="status-select" onchange="manualSelect()">
-  <option value="">-- Select --</option>
-  <option value="Online">Online</option>
-  <option value="Sleeping">Sleeping</option>
-  <option value="Offline">Offline</option>
-  <option value="At School">At School</option>
-  <option value="On Break">On Break</option>
-</select>
-  </div>
-  <button onclick="resetToAuto()">Back to Auto Mode</button>
 
   <!-- Main container -->
   <div class="container" style="display: none;">
-    <header>
-      <h1 id="status-title" onclick="openPassword()">Enzo's Status</h1>
-      <div id="status" class="status">Loading status...</div>
-      <div id="countdown"></div>
+    <header onclick="openManualBox()">
+      <h1>Enzo's Status</h1>
+      <div class="status-wrapper">
+        <div id="status" class="status">Loading status...</div>
+        <div id="countdown"></div>
+      </div>
     </header>
 
     <main>
       <section>
-        <h2>Current Projects</h2>
+        <h2>🔧 Current Projects</h2>
         <ul>
-          <li>Project Alpha - Roblox system</li>
+          <li>Project Alpha – Roblox system</li>
           <li>Glideways IFE redesign</li>
         </ul>
       </section>
+
       <section>
-        <h2>Upcoming Projects</h2>
+        <h2>🌱 Upcoming Projects</h2>
         <ul>
           <li>Booking backend upgrade</li>
           <li>Roblox flight simulator map</li>
