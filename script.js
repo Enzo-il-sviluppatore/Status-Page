@@ -76,6 +76,7 @@ function manualSelect() {
   localStorage.setItem("manualStatus", manualStatus);
 
   updateStatus(manualStatus);
+  manualStatusBox.classList.add("hidden");
 }
 
 function resetToAuto() {
