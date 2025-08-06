@@ -10,7 +10,9 @@ body {
 .container {
   display: none;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease;
+  z-index: 1;
+  position: relative;
   max-width: 480px;
   margin: 0 auto;
   background: rgba(255 255 255 / 0.1);
@@ -18,6 +20,10 @@ body {
   border-radius: 16px;
   padding: 2rem;
 }
+
+body.loaded .container {
+  display: block;
+opacity: 1;
 .status {
   font-size: 3rem;
   font-weight: bold;
