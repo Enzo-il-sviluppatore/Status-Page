@@ -1,81 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics-compat.js"></script>
-
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enzo's Status</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enzo's Status & Projects</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics-compat.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <!-- Loader screen -->
   <div id="loader">
-    <div class="loader-content">
-      <h1>Welcome</h1>
-      <p>Give me one moment to load my current status<span id="dots">.</span></p>
+    Welcome<br />
+    Give me one moment to load my current status<span id="dots">.</span>
+  </div>
+
+  <div class="container">
+    <p id="enzo-status-text">Enzo's Status</p>
+
+    <div id="status" class="status">Loading...</div>
+    <div id="countdown"></div>
+
+    <div id="manual-status" class="hidden">
+      <select id="status-select" aria-label="Select status">
+        <option value="">Select a status</option>
+        <option value="Online">Online</option>
+        <option value="Sleeping">Sleeping</option>
+        <option value="At School">At School</option>
+        <option value="On Break">On Break</option>
+        <option value="Offline">Offline</option>
+      </select>
+      <button id="set-status-btn">Set Status</button>
+      <button id="reset-status-btn">Back to Auto Mode</button>
+    </div>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Current Projects</h2>
+      <ul id="current-projects-list" class="project-list">
+        <!-- Projects will be added here -->
+      </ul>
+
+      <h2>Upcoming Projects</h2>
+      <ul id="upcoming-projects-list" class="project-list">
+        <!-- Projects will be added here -->
+      </ul>
+    </section>
+  </div>
+
+  <!-- Password popup -->
+  <div id="password-popup" class="popup hidden">
+    <div class="popup-content">
+      <label for="password-input">Enter password:</label>
+      <input type="password" id="password-input" autocomplete="off" />
+      <button id="password-submit">Submit</button>
+      <button id="password-cancel">Cancel</button>
     </div>
   </div>
-
-  <!-- Manual status override box (hidden until password accepted) -->
-  <div id="manual-status" class="glass hidden">
-    <label for="status-select">Set your status:</label>
-    <select id="status-select" onchange="manualSelect()">
-      <option value="">-- Select --</option>
-      <option value="Online">Online</option>
-      <option value="Sleeping">Sleeping</option>
-      <option value="Offline">Offline</option>
-      <option value="At School">At School</option>
-      <option value="On Break">On Break</option>
-    </select>
-    <button onclick="resetToAuto()">Back to Auto Mode</button>
-  </div>
-<div id="password-popup" class="popup hidden">
-  <div class="popup-content">
-    <label for="password-input">Enter password:</label>
-    <input type="password" id="password-input" autocomplete="off" />
-    <button id="password-submit">Submit</button>
-    <button id="password-cancel">Cancel</button>
-  </div>
-</div>
-
-
-  <!-- Main container -->
-  <div class="container" style="display: none;">
-    <header onclick="openManualBox()">
-      <h1>Enzo's Status</h1>
-      <div class="status-wrapper">
-        <div id="status" class="status">Loading status...</div>
-        <div id="countdown"></div>
-      </div>
-    </header>
-
-    <main>
-      <section>
-        <h2>Current Projects</h2>
-        <ul>
-          <li>Project Alpha – Roblox system</li>
-          <li>Glideways IFE redesign</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Upcoming Projects</h2>
-        <ul>
-          <li>Booking backend upgrade</li>
-          <li>Roblox flight simulator map</li>
-        </ul>
-      </section>
-    </main>
-
+  
     <footer>
       <p>Made with ❤️ by Vincenzo</p>
       <p>Make sure to refresh for an accurate status as it can be changed manually and automatically</p>
     </footer>
-  </div>
 
   <script src="script.js"></script>
 </body>
