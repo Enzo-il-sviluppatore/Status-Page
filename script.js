@@ -1,35 +1,69 @@
+// ====== Paste your Firebase config here ======
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBS3R4MIYvo3rWvFlmT3anBnpPRMyC3wdA",
+  authDomain: "enzostatus-e717f.firebaseapp.com",
+  databaseURL: "https://enzostatus-e717f-default-rtdb.firebaseio.com",
+  projectId: "enzostatus-e717f",
+  storageBucket: "enzostatus-e717f.firebasestorage.app",
+  messagingSenderId: "232951174632",
+  appId: "1:232951174632:web:d2d57c74ac1069fd4c405d",
+  measurementId: "G-2GCFF7MZKV"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 const statusEl = document.getElementById("status");
 const countdownEl = document.getElementById("countdown");
 const manualStatusBox = document.getElementById("manual-status");
 const loader = document.getElementById("loader");
 
-let manualOverride = localStorage.getItem("manualOverride") === "true";
-let manualStatus = localStorage.getItem("manualStatus") || "";
+// Reference to the manual override and status in the DB
+const statusRef = db.ref('status');
+const manualOverrideRef = db.ref('manualOverride');
 
-setTimeout(() => {
-  loader.style.opacity = "0";
+let manualOverride = false;
+let manualStatus = "";
+
+// Show loader, then initialize
+window.addEventListener("load", () => {
   setTimeout(() => {
-    loader.style.display = "none";
-    document.querySelector(".container").style.display = "block";
-    document.querySelector(".container").style.opacity = "1";
-    getStatus();
-  }, 800); // wait for fade-out to finish
-}, 5000); // <-- loader time (change this to whatever you want)
+    loader.style.opacity = "0";
+    setTimeout(() => {
+      loader.style.display = "none";
+      document.querySelector(".container").style.display = "block";
+      listenForStatusChanges();
+    }, 800);
+  }, 2000); // Adjust loading time here
+});
 
-let dotIndex = 0;
-const dotsEl = document.getElementById("dots");
+// Listen for status changes in Firebase DB
+function listenForStatusChanges() {
+  statusRef.on('value', (snapshot) => {
+    manualOverrideRef.once('value').then((manualSnap) => {
+      manualOverride = manualSnap.val();
+      manualStatus = snapshot.val();
 
-setInterval(() => {
-  dotIndex = (dotIndex + 1) % 4;
-  dotsEl.textContent = '.'.repeat(dotIndex || 1);
-}, 500);
+      if (manualOverride && manualStatus) {
+        updateStatus(manualStatus);
+      } else {
+        autoStatus();
+      }
+    });
+  });
+}
 
-function getStatus() {
-  if (manualOverride && manualStatus) {
-    updateStatus(manualStatus);
-    return;
-  }
-
+// Auto status based on EST time + day
+function autoStatus() {
   const now = new Date();
   const utcHour = now.getUTCHours();
   const estHour = (utcHour - 4 + 24) % 24;
@@ -48,6 +82,7 @@ function getStatus() {
   updateStatus(status);
 }
 
+// Update status display & countdown
 function updateStatus(status) {
   const lower = status.toLowerCase().replace(/\s+/g, '');
   statusEl.className = "status " + lower;
@@ -68,20 +103,17 @@ function updateStatus(status) {
   }
 }
 
+// Password prompt for manual override
 function openManualBox() {
-  document.getElementById("password-popup").classList.remove("hidden");
-}
-
-function submitPassword() {
-  const input = document.getElementById("password-input").value;
-  if (input === "VBal55001") {
-    document.getElementById("password-popup").classList.add("hidden");
+  const pass = prompt("Enter password to change status:");
+  if (pass === "yourPasswordHere") {
     manualStatusBox.classList.remove("hidden");
   } else {
     alert("Incorrect password.");
   }
 }
 
+// When you select a manual status from dropdown
 function manualSelect() {
   const selected = document.getElementById("status-select").value;
   if (!selected) return;
@@ -89,22 +121,22 @@ function manualSelect() {
   manualOverride = true;
   manualStatus = selected;
 
-  localStorage.setItem("manualOverride", "true");
-  localStorage.setItem("manualStatus", manualStatus);
+  // Write to Firebase DB
+  statusRef.set(manualStatus);
+  manualOverrideRef.set(true);
 
   updateStatus(manualStatus);
-
-  // 👇 Auto close popup
   manualStatusBox.classList.add("hidden");
 }
 
+// Reset to auto mode
 function resetToAuto() {
   manualOverride = false;
   manualStatus = "";
 
-  localStorage.removeItem("manualOverride");
-  localStorage.removeItem("manualStatus");
+  manualOverrideRef.set(false);
+  statusRef.set("");
 
-  getStatus();
   manualStatusBox.classList.add("hidden");
+  autoStatus();
 }
