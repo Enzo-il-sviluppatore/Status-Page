@@ -21,15 +21,17 @@ function getStatus() {
   }
 
   const now = new Date();
-  const hour = now.getHours();
+  const utcHour = now.getUTCHours();
+  const estHour = (utcHour - 4 + 24) % 24;
   const day = now.getDay();
+
   let status = "Online";
 
-  if (hour >= 22 || hour < 6) {
+  if (estHour >= 22 || estHour < 6) {
     status = "Sleeping";
-  } else if (hour >= 7 && hour < 14 && day >= 1 && day <= 5) {
+  } else if (estHour >= 7 && estHour < 14 && day >= 1 && day <= 5) {
     status = "At School";
-  } else if (hour >= 14 && hour < 15) {
+  } else if (estHour >= 14 && estHour < 15) {
     status = "On Break";
   }
 
@@ -44,7 +46,7 @@ function updateStatus(status) {
   if (status === "Sleeping") {
     const now = new Date();
     const wake = new Date();
-    wake.setHours(6, 30, 0, 0);
+    wake.setUTCHours(10, 30, 0, 0); // 6:30 AM EST = 10:30 UTC
     if (now > wake) wake.setDate(wake.getDate() + 1);
 
     const diff = wake - now;
@@ -76,6 +78,8 @@ function manualSelect() {
   localStorage.setItem("manualStatus", manualStatus);
 
   updateStatus(manualStatus);
+
+  // 👇 Auto close popup
   manualStatusBox.classList.add("hidden");
 }
 
