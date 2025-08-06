@@ -33,9 +33,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.8s ease;
+ opacity: 1;
+  transition: opacity 0.8s ease-in-out;
 }
-
+.container {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
 .loader-content {
   animation: fadeIn 1.5s ease-in-out;
 }
