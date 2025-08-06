@@ -9,8 +9,9 @@ let manualStatus = localStorage.getItem("manualStatus") || "";
 window.addEventListener("load", () => {
   setTimeout(() => {
     loader.style.display = "none";
+    document.querySelector(".container").style.display = "block";
     getStatus();
-  }, 1500); // loader stays for 1.5s
+  }, 1500);
 });
 
 function getStatus() {
@@ -21,21 +22,14 @@ function getStatus() {
 
   const now = new Date();
   const hour = now.getHours();
-  const minute = now.getMinutes();
   const day = now.getDay();
-
   let status = "Online";
 
-  // EST correction (if server is UTC, adjust here if needed)
-  const estHour = hour;
-
-  if (estHour >= 22 || estHour < 6) {
+  if (hour >= 22 || hour < 6) {
     status = "Sleeping";
-  } else if (estHour >= 6 && estHour < 7) {
-    status = "Waking Up";
-  } else if (estHour >= 7 && estHour < 14 && day >= 1 && day <= 5) {
+  } else if (hour >= 7 && hour < 14 && day >= 1 && day <= 5) {
     status = "At School";
-  } else if (estHour >= 14 && estHour < 15) {
+  } else if (hour >= 14 && hour < 15) {
     status = "On Break";
   }
 
@@ -44,27 +38,24 @@ function getStatus() {
 
 function updateStatus(status) {
   const lower = status.toLowerCase().replace(/\s+/g, '');
-
   statusEl.className = "status " + lower;
   statusEl.textContent = status;
 
-  // Handle countdown if sleeping
   if (status === "Sleeping") {
     const now = new Date();
-    const wake = new Date(now);
+    const wake = new Date();
     wake.setHours(6, 30, 0, 0);
     if (now > wake) wake.setDate(wake.getDate() + 1);
 
     const diff = wake - now;
-    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const hrs = Math.floor(diff / (1000 * 60 * 60));
     const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    countdownEl.textContent = `Back in ${hours}h ${mins}m`;
+    countdownEl.textContent = `Back in ${hrs}h ${mins}m`;
   } else {
     countdownEl.textContent = "";
   }
 }
 
-// Open manual entry popup
 function openManualBox() {
   const pass = prompt("Enter password to change status:");
   if (pass === "yourPasswordHere") {
@@ -74,7 +65,6 @@ function openManualBox() {
   }
 }
 
-// Manual status select
 function manualSelect() {
   const selected = document.getElementById("status-select").value;
   if (!selected) return;
@@ -88,10 +78,10 @@ function manualSelect() {
   updateStatus(manualStatus);
 }
 
-// Reset back to auto
 function resetToAuto() {
   manualOverride = false;
   manualStatus = "";
+
   localStorage.removeItem("manualOverride");
   localStorage.removeItem("manualStatus");
 
