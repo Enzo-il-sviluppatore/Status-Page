@@ -60,7 +60,7 @@ function updateStatus(status) {
 
 function openManualBox() {
   const pass = prompt("Enter password to change status:");
-  if (pass === "yourPasswordHere") {
+  if (pass === "VBal55001") {
     manualStatusBox.classList.remove("hidden");
   } else {
     alert("Incorrect password.");
