@@ -1,12 +1,11 @@
 body {
-  background: #121212;
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: 'Trebuchet MS', sans-serif;
+  background-color: #111;
   color: white;
   text-align: center;
   margin: 0;
-  padding: 2rem;
-  user-select: none;
 }
+
 .container {
   display: none;
   opacity: 0;
@@ -15,141 +14,63 @@ body {
   position: relative;
   max-width: 480px;
   margin: 0 auto;
-  background: rgba(255 255 255 / 0.1);
-  backdrop-filter: blur(15px);
+  background: rgba(255 255 255 / 0.08);
+  backdrop-filter: blur(20px);
   border-radius: 16px;
   padding: 2rem;
 }
 
 body.loaded .container {
   display: block;
-opacity: 1;
+  opacity: 1;
+}
+
 .status {
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  user-select: text;
-}
-.status.online {
-  color: #00c7a5;
-}
-.status.sleeping {
-  color: #888;
-}
-.status.atschool {
-  color: #36c;
-}
-.status.onbreak {
-  color: #f39c12;
-}
-#countdown {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  user-select: text;
-}
-#loader {
-  font-size: 1.3rem;
-  user-select: none;
-  color: white;
-  margin-top: 20vh;
-  transition: opacity 0.8s ease-in-out;
-}
-#dots {
-  font-weight: 900;
-}
-#manual-status {
-  display: none;
-  margin-top: 1rem;
-  background: rgba(255 255 255 / 0.15);
-  padding: 1rem;
-  border-radius: 12px;
-  user-select: none;
-}
-#manual-status select {
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-  margin-right: 1rem;
-  background: rgba(255 255 255 / 0.25);
-  color: black;
-  cursor: pointer;
-}
-#manual-status button {
-  padding: 0.6rem 1.2rem;
-  background: #00c7a5;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
-.popup {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-.popup-content {
-  background: rgba(255 255 255 / 0.15);
-  backdrop-filter: blur(15px);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  color: white;
-  width: 280px;
-}
-.popup input {
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: none;
+  font-size: 2rem;
   margin: 1rem 0;
+}
+
+#countdown {
   font-size: 1rem;
-  background: rgba(255 255 255 / 0.25);
-  color: white;
+  color: #aaa;
 }
-.popup button {
-  margin: 0 0.5rem;
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  background: #00c7a5;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
+
+.project-list {
+  list-style: none;
+  padding: 0;
 }
-.hidden {
-  display: none !important;
-}
-#enzo-status-text {
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1.3rem;
-  margin-bottom: 1.5rem;
-  user-select: none;
+
+.project-list li::before {
+  content: "• ";
   color: #00c7a5;
-  text-decoration: underline;
+  margin-right: 5px;
 }
 
 footer {
-  display: none;
-  text-align: center;
-  padding: 1rem 0;
-  color: #aaa;
-  font-size: 0.9rem;
-  user-select: none;
-  backdrop-filter: blur(15px);
-  background: rgba(255 255 255 / 0.05);
-  border-top: 1px solid rgba(255 255 255 / 0.1);
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 10;
+  margin-top: 2rem;
+  color: #ccc;
+  font-size: 0.8rem;
 }
+
+/* Loader */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #111;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Trebuchet MS', sans-serif;
+  z-index: 1000;
+  transition: opacity 1s ease;
+}
+
+/* Popup */
 .popup {
   position: fixed;
   top: 0;
@@ -184,10 +105,6 @@ footer {
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
   color: white;
-}
-
-.popup input::placeholder {
-  color: #ccc;
 }
 
 .popup-buttons {
