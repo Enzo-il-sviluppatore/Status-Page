@@ -132,3 +132,11 @@ footer {
 .hidden {
   display: none;
 }
+/* Wrap status text + bubble */
+.status-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
