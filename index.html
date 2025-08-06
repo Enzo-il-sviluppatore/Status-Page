@@ -33,11 +33,15 @@
     </select>
     <button onclick="resetToAuto()">Back to Auto Mode</button>
   </div>
-<div id="password-popup" class="glass hidden">
-  <h3>Enter Password</h3>
-  <input type="password" id="password-input" placeholder="••••••••">
-  <button onclick="submitPassword()">Submit</button>
+<div id="password-popup" class="popup hidden">
+  <div class="popup-content">
+    <label for="password-input">Enter password:</label>
+    <input type="password" id="password-input" autocomplete="off" />
+    <button id="password-submit">Submit</button>
+    <button id="password-cancel">Cancel</button>
+  </div>
 </div>
+
 
   <!-- Main container -->
   <div class="container" style="display: none;">
