@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- Preload screen -->
+  <!-- Loader screen -->
   <div id="loader">
     <div class="loader-content">
       <h1>Welcome</h1>
@@ -16,10 +16,30 @@
     </div>
   </div>
 
-  <!-- Main container (hidden until status loads) -->
+  <!-- Status password prompt -->
+  <div id="password-popup" class="glass hidden">
+    <p>Enter password to override status:</p>
+    <input type="password" id="password-input" placeholder="Password..." />
+    <button onclick="checkPassword()">Submit</button>
+  </div>
+
+  <!-- Manual override dropdown -->
+  <div id="manual-status" class="glass hidden">
+    <label for="status-select">Set your status:</label>
+    <select id="status-select" onchange="manualSelect()">
+      <option value="">-- Select --</option>
+      <option value="Online">Online</option>
+      <option value="Sleeping">Sleeping</option>
+      <option value="Offline">Offline</option>
+      <option value="At School">At School</option>
+      <option value="On Break">On Break</option>
+    </select>
+  </div>
+
+  <!-- Main container -->
   <div class="container" style="display: none;">
     <header>
-      <h1>Enzo's Status</h1>
+      <h1 id="status-title" onclick="openPassword()">Enzo's Status</h1>
       <div id="status" class="status">Loading status...</div>
       <div id="countdown"></div>
     </header>
@@ -27,7 +47,7 @@
     <main>
       <section>
         <h2>Current Projects</h2>
-        <ul id="current-projects">
+        <ul>
           <li>Project Alpha - Roblox system</li>
           <li>Glideways IFE redesign</li>
         </ul>
@@ -35,7 +55,7 @@
 
       <section>
         <h2>Upcoming Projects</h2>
-        <ul id="upcoming-projects">
+        <ul>
           <li>Booking backend upgrade</li>
           <li>Roblox flight simulator map</li>
         </ul>
