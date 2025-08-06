@@ -1,3 +1,4 @@
+// Your Firebase config — plug yours in here
 const firebaseConfig = {
   apiKey: "AIzaSyBS3R4MIYvo3rWvFlmT3anBnpPRMyC3wdA",
   authDomain: "enzostatus-e717f.firebaseapp.com",
@@ -20,14 +21,13 @@ const countdownEl = document.getElementById("countdown");
 const manualStatusBox = document.getElementById("manual-status");
 const loader = document.getElementById("loader");
 
-// References to the database paths
 const statusRef = db.ref('status');
 const manualOverrideRef = db.ref('manualOverride');
 
 let manualOverride = false;
 let manualStatus = "";
 
-// Loading dots animation
+// Dots animation on loader
 let dotIndex = 0;
 const dotsEl = document.getElementById("dots");
 setInterval(() => {
@@ -35,7 +35,7 @@ setInterval(() => {
   dotsEl.textContent = '.'.repeat(dotIndex || 1);
 }, 500);
 
-// Show loader, then initialize main content
+// Show loader, then fade in main content
 window.addEventListener("load", () => {
   setTimeout(() => {
     loader.style.opacity = "0";
@@ -44,10 +44,10 @@ window.addEventListener("load", () => {
       document.querySelector(".container").style.display = "block";
       listenForStatusChanges();
     }, 800);
-  }, 5000); // Adjust loader display time here
+  }, 5000);
 });
 
-// Listen for status changes in Firebase
+// Listen to Firebase status changes
 function listenForStatusChanges() {
   statusRef.on('value', (snapshot) => {
     manualOverrideRef.once('value').then((manualSnap) => {
@@ -63,7 +63,7 @@ function listenForStatusChanges() {
   });
 }
 
-// Auto status logic based on EST time
+// Auto status based on EST time
 function autoStatus() {
   const now = new Date();
   const utcHour = now.getUTCHours();
@@ -83,7 +83,7 @@ function autoStatus() {
   updateStatus(status);
 }
 
-// Update status display and countdown if sleeping
+// Update status & countdown
 function updateStatus(status) {
   const lower = status.toLowerCase().replace(/\s+/g, '');
   statusEl.className = "status " + lower;
@@ -92,7 +92,7 @@ function updateStatus(status) {
   if (status === "Sleeping") {
     const now = new Date();
     const wake = new Date();
-    wake.setUTCHours(10, 30, 0, 0); // 6:30 AM EST = 10:30 UTC
+    wake.setUTCHours(10, 30, 0, 0);
     if (now > wake) wake.setDate(wake.getDate() + 1);
 
     const diff = wake - now;
@@ -104,34 +104,58 @@ function updateStatus(status) {
   }
 }
 
-// Password prompt to open manual status override
-function openManualBox() {
-  const pass = prompt("Enter password to change status:");
-  if (pass === "yourPasswordHere") {
+// Password popup elements
+const passwordPopup = document.getElementById("password-popup");
+const passwordInput = document.getElementById("password-input");
+const passwordSubmit = document.getElementById("password-submit");
+const passwordCancel = document.getElementById("password-cancel");
+const manualStatusDropdown = document.getElementById("status-select");
+const setStatusBtn = document.getElementById("set-status-btn");
+const resetStatusBtn = document.getElementById("reset-status-btn");
+
+// Show password popup on click
+document.getElementById("enzo-status-text").addEventListener("click", () => {
+  passwordInput.value = "";
+  passwordPopup.classList.remove("hidden");
+  passwordInput.focus();
+});
+
+// Password submit handler
+passwordSubmit.addEventListener("click", () => {
+  const pass = passwordInput.value;
+  if (pass === "yourPasswordHere") { // Replace with your password
+    passwordPopup.classList.add("hidden");
     manualStatusBox.classList.remove("hidden");
   } else {
     alert("Incorrect password.");
+    passwordInput.value = "";
+    passwordInput.focus();
   }
-}
+});
 
-// Called when user selects a manual status from dropdown
-function manualSelect() {
-  const selected = document.getElementById("status-select").value;
+// Cancel button handler
+passwordCancel.addEventListener("click", () => {
+  passwordPopup.classList.add("hidden");
+  passwordInput.value = "";
+});
+
+// Manual status set button
+setStatusBtn.addEventListener("click", () => {
+  const selected = manualStatusDropdown.value;
   if (!selected) return;
 
   manualOverride = true;
   manualStatus = selected;
 
-  // Update Firebase
   statusRef.set(manualStatus);
   manualOverrideRef.set(true);
 
   updateStatus(manualStatus);
   manualStatusBox.classList.add("hidden");
-}
+});
 
-// Reset to automatic status mode
-function resetToAuto() {
+// Reset to auto mode button
+resetStatusBtn.addEventListener("click", () => {
   manualOverride = false;
   manualStatus = "";
 
@@ -140,4 +164,4 @@ function resetToAuto() {
 
   manualStatusBox.classList.add("hidden");
   autoStatus();
-}
+});
