@@ -1,4 +1,98 @@
-/* Glassmorphism styling */
+/* General Styling */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f0f;
+  color: #eee;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.status {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+main section {
+  margin-bottom: 2rem;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 3rem;
+  opacity: 0.6;
+}
+
+/* Status colors */
+.status.online {
+  background-color: #00c7a5;
+}
+
+.status.sleeping {
+  background-color: #555;
+}
+
+.status.offline {
+  background-color: #777;
+}
+
+.status.school {
+  background-color: #369;
+}
+
+.status.break {
+  background-color: #f5a623;
+}
+
+/* Loader screen */
+#loader {
+  position: fixed;
+  z-index: 9999;
+  background: #0f0f0f;
+  color: #eee;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease;
+}
+
+.loader-content {
+  text-align: center;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glassmorphism popup styling */
 .glass {
   position: fixed;
   top: 50%;
@@ -13,16 +107,21 @@
   color: #fff;
   text-align: center;
   z-index: 9998;
+  width: 90%;
+  max-width: 300px;
 }
 
-.glass input, .glass select {
+.glass input,
+.glass select {
   background: rgba(255, 255, 255, 0.15);
   border: none;
   padding: 0.5rem 1rem;
   margin-top: 1rem;
   border-radius: 10px;
   color: #fff;
+  width: 100%;
   backdrop-filter: blur(10px);
+  outline: none;
 }
 
 .glass button {
@@ -34,8 +133,15 @@
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
 }
 
+.glass button:hover {
+  background-color: #00a88b;
+}
+
+/* Utility class */
 .hidden {
   display: none;
 }
