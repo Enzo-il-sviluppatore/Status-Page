@@ -128,3 +128,19 @@ body {
   color: #00c7a5;
   text-decoration: underline;
 }
+
+footer {
+  display: none;
+  text-align: center;
+  padding: 1rem 0;
+  color: #aaa;
+  font-size: 0.9rem;
+  user-select: none;
+  backdrop-filter: blur(15px);
+  background: rgba(255 255 255 / 0.05);
+  border-top: 1px solid rgba(255 255 255 / 0.1);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+}
