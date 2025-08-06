@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
     loader.style.display = "none";
     document.querySelector(".container").style.display = "block";
     getStatus();
-  }, 1500);
+  }, 5000);
 });
 
 function getStatus() {
