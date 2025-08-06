@@ -117,6 +117,11 @@ footer {
 }
 
 .glass input,
+#password-popup input {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-align: center;
+}
 .glass select {
   background: rgba(255, 255, 255, 0.1);
   border: none;
