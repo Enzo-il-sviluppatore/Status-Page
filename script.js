@@ -47,6 +47,7 @@ window.addEventListener("load", () => {
     }, 800);
   }, 5000);
 });
+document.body.classList.add("loaded");
 
 // Listen to Firebase status changes
 function listenForStatusChanges() {
