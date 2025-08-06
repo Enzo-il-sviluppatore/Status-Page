@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,17 +8,17 @@
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics-compat.js"></script>
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
- <div id="loader">
-  <h1>Welcome</h1><br />
-  Give me one moment to load my current status<span id="dots">.</span>
-</div>
+  <!-- Loader -->
+  <div id="loader">
+    <h1><strong>Welcome</strong></h1>
+    <p>Give me one moment to load my current status<span id="dots">.</span></p>
+  </div>
 
-
+  <!-- Main Container -->
   <div class="container">
     <p id="enzo-status-text">Enzo's Status</p>
 
@@ -26,7 +26,7 @@
     <div id="countdown"></div>
 
     <div id="manual-status" class="hidden">
-      <select id="status-select" aria-label="Select status">
+      <select id="status-select">
         <option value="">Select a status</option>
         <option value="Online">Online</option>
         <option value="Sleeping">Sleeping</option>
@@ -38,37 +38,31 @@
       <button id="reset-status-btn">Back to Auto Mode</button>
     </div>
 
-    <!-- Projects -->
     <section id="projects">
       <h2>Current Projects</h2>
-      <ul id="current-projects-list" class="project-list">
-        <!-- Projects will be added here -->
-      </ul>
+      <ul id="current-projects-list" class="project-list"></ul>
 
       <h2>Upcoming Projects</h2>
-      <ul id="upcoming-projects-list" class="project-list">
-        <!-- Projects will be added here -->
-      </ul>
+      <ul id="upcoming-projects-list" class="project-list"></ul>
     </section>
   </div>
 
-  <!-- Password popup -->
- <!-- Password popup -->
-<div id="password-popup" class="popup hidden">
-  <div class="popup-content">
-    <h3>Enter Password</h3>
-    <input type="password" id="password-input" placeholder="Password" />
-    <div class="popup-buttons">
-      <button id="password-submit">Submit</button>
-      <button id="password-cancel">Cancel</button>
+  <!-- Password Popup -->
+  <div id="password-popup" class="popup hidden">
+    <div class="popup-content">
+      <h3>Enter Password</h3>
+      <input type="password" id="password-input" placeholder="Password" />
+      <div class="popup-buttons">
+        <button id="password-submit">Submit</button>
+        <button id="password-cancel">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
-  
-    <footer>
-      <p>Made with ❤️ by Vincenzo</p>
-      <p>Make sure to refresh for an accurate status as it can be changed manually and automatically</p>
-    </footer>
+
+  <footer>
+    <p>Made with ❤️ by Vincenzo</p>
+    <p>Refresh to sync status across devices</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
