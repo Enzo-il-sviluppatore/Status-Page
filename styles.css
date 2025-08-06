@@ -1,21 +1,21 @@
-/* Reset + Base Font */
+/* Reset + Font */
 body {
   font-family: 'Trebuchet MS', sans-serif;
   margin: 0;
   padding: 0;
-  background: url('background.jpg') center/cover no-repeat fixed;
+  background: #0f0f0f url('background.jpg') center/cover no-repeat fixed;
   color: #eee;
   overflow-x: hidden;
   text-align: center;
 }
 
-/* Glass effect wrapper for everything */
+/* Glass container for everything */
 .container, header, main, footer {
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
   border-radius: 20px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   padding: 2rem;
   margin: 2rem auto;
   max-width: 800px;
@@ -37,22 +37,15 @@ body {
 }
 
 .loader-content {
-  text-align: center;
   animation: fadeIn 1.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Status box */
+/* Status bubble */
 .status {
   font-size: 1.5rem;
   font-weight: bold;
@@ -62,7 +55,7 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Countdown */
+/* Countdown text */
 #countdown {
   margin-top: 0.5rem;
   font-size: 0.9rem;
@@ -70,46 +63,34 @@ body {
 }
 
 /* Status colors */
-.status.online {
-  background-color: #00c7a5;
-}
-.status.sleeping {
-  background-color: #555;
-}
-.status.offline {
-  background-color: #777;
-}
-.status.school {
-  background-color: #369;
-}
-.status.break {
-  background-color: #f5a623;
-}
+.status.online    { background-color: #00c7a5; }
+.status.sleeping  { background-color: #555; }
+.status.offline   { background-color: #777; }
+.status.school    { background-color: #369; }
+.status.break     { background-color: #f5a623; }
 
-/* Section spacing */
 main section {
   margin-bottom: 2rem;
 }
 
-/* Footer */
 footer {
   font-size: 0.9rem;
   margin-top: 3rem;
   opacity: 0.6;
 }
 
-/* Glassmorphism overlays */
+/* Glassy Popups */
 .glass {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(30, 30, 30, 0.4);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
   color: #fff;
   text-align: center;
   z-index: 9998;
@@ -119,7 +100,7 @@ footer {
 
 .glass input,
 .glass select {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   padding: 0.5rem 1rem;
   margin-top: 1rem;
@@ -148,7 +129,6 @@ footer {
   background-color: #00a88b;
 }
 
-/* Hide utility */
 .hidden {
   display: none;
 }
