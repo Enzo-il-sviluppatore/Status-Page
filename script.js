@@ -64,7 +64,7 @@ function openManualBox() {
 
 function submitPassword() {
   const input = document.getElementById("password-input").value;
-  if (input === "yourPasswordHere") {
+  if (input === "VBal55001") {
     document.getElementById("password-popup").classList.add("hidden");
     manualStatusBox.classList.remove("hidden");
   } else {
