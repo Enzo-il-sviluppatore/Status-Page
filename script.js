@@ -59,8 +59,13 @@ function updateStatus(status) {
 }
 
 function openManualBox() {
-  const pass = prompt("Enter password to change status:");
-  if (pass === "VBal55001") {
+  document.getElementById("password-popup").classList.remove("hidden");
+}
+
+function submitPassword() {
+  const input = document.getElementById("password-input").value;
+  if (input === "yourPasswordHere") {
+    document.getElementById("password-popup").classList.add("hidden");
     manualStatusBox.classList.remove("hidden");
   } else {
     alert("Incorrect password.");
