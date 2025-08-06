@@ -1,4 +1,4 @@
-/* Reset + Font */
+/* Base Styling */
 body {
   font-family: 'Trebuchet MS', sans-serif;
   margin: 0;
@@ -9,7 +9,7 @@ body {
   text-align: center;
 }
 
-/* Glass container for everything */
+/* Main glass containers */
 .container, header, main, footer {
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(14px) saturate(180%);
@@ -45,7 +45,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Status bubble */
+/* Status display */
 .status {
   font-size: 1.5rem;
   font-weight: bold;
@@ -55,9 +55,14 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Countdown text */
+.status-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 #countdown {
-  margin-top: 0.5rem;
   font-size: 0.9rem;
   opacity: 0.7;
 }
@@ -69,17 +74,30 @@ body {
 .status.school    { background-color: #369; }
 .status.break     { background-color: #f5a623; }
 
+/* Sections */
 main section {
   margin-bottom: 2rem;
 }
 
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 auto;
+  text-align: center;
+}
+
+li {
+  margin: 0.5rem 0;
+}
+
+/* Footer */
 footer {
   font-size: 0.9rem;
   margin-top: 3rem;
   opacity: 0.6;
 }
 
-/* Glassy Popups */
+/* Manual popup */
 .glass {
   position: fixed;
   top: 50%;
@@ -131,22 +149,4 @@ footer {
 
 .hidden {
   display: none;
-}
-/* Wrap status text + bubble */
-.status-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-ul {
-  list-style-position: inside;
-  padding-left: 0;
-  margin: 0 auto;
-  text-align: center;
-}
-li {
-  margin: 0.5rem 0;
 }
