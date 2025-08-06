@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enzo's Hub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
+  <!-- Preload screen -->
+  <div id="loader">
+    <div class="loader-content">
+      <h1>Welcome</h1>
+      <p>Give me one moment to load my current status...</p>
+    </div>
+  </div>
+
+  <!-- Main container (hidden until status loads) -->
+  <div class="container" style="display: none;">
+    <header>
+      <h1>Enzo's Status</h1>
+      <div id="status" class="status">Loading status...</div>
+      <div id="countdown"></div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Current Projects</h2>
+        <ul id="current-projects">
+          <li>Project Alpha - Roblox system</li>
+          <li>Glideways IFE redesign</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Upcoming Projects</h2>
+        <ul id="upcoming-projects">
+          <li>Booking backend upgrade</li>
+          <li>Roblox flight simulator map</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made with ❤️ by Vincenzo</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
