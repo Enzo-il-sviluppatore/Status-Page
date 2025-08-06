@@ -1,12 +1,3 @@
-// ====== Paste your Firebase config here ======
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBS3R4MIYvo3rWvFlmT3anBnpPRMyC3wdA",
   authDomain: "enzostatus-e717f.firebaseapp.com",
@@ -19,22 +10,32 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+const db = firebase.database();
 
 const statusEl = document.getElementById("status");
 const countdownEl = document.getElementById("countdown");
 const manualStatusBox = document.getElementById("manual-status");
 const loader = document.getElementById("loader");
 
-// Reference to the manual override and status in the DB
+// References to the database paths
 const statusRef = db.ref('status');
 const manualOverrideRef = db.ref('manualOverride');
 
 let manualOverride = false;
 let manualStatus = "";
 
-// Show loader, then initialize
+// Loading dots animation
+let dotIndex = 0;
+const dotsEl = document.getElementById("dots");
+setInterval(() => {
+  dotIndex = (dotIndex + 1) % 4;
+  dotsEl.textContent = '.'.repeat(dotIndex || 1);
+}, 500);
+
+// Show loader, then initialize main content
 window.addEventListener("load", () => {
   setTimeout(() => {
     loader.style.opacity = "0";
@@ -43,10 +44,10 @@ window.addEventListener("load", () => {
       document.querySelector(".container").style.display = "block";
       listenForStatusChanges();
     }, 800);
-  }, 2000); // Adjust loading time here
+  }, 5000); // Adjust loader display time here
 });
 
-// Listen for status changes in Firebase DB
+// Listen for status changes in Firebase
 function listenForStatusChanges() {
   statusRef.on('value', (snapshot) => {
     manualOverrideRef.once('value').then((manualSnap) => {
@@ -62,7 +63,7 @@ function listenForStatusChanges() {
   });
 }
 
-// Auto status based on EST time + day
+// Auto status logic based on EST time
 function autoStatus() {
   const now = new Date();
   const utcHour = now.getUTCHours();
@@ -82,7 +83,7 @@ function autoStatus() {
   updateStatus(status);
 }
 
-// Update status display & countdown
+// Update status display and countdown if sleeping
 function updateStatus(status) {
   const lower = status.toLowerCase().replace(/\s+/g, '');
   statusEl.className = "status " + lower;
@@ -103,7 +104,7 @@ function updateStatus(status) {
   }
 }
 
-// Password prompt for manual override
+// Password prompt to open manual status override
 function openManualBox() {
   const pass = prompt("Enter password to change status:");
   if (pass === "yourPasswordHere") {
@@ -113,7 +114,7 @@ function openManualBox() {
   }
 }
 
-// When you select a manual status from dropdown
+// Called when user selects a manual status from dropdown
 function manualSelect() {
   const selected = document.getElementById("status-select").value;
   if (!selected) return;
@@ -121,7 +122,7 @@ function manualSelect() {
   manualOverride = true;
   manualStatus = selected;
 
-  // Write to Firebase DB
+  // Update Firebase
   statusRef.set(manualStatus);
   manualOverrideRef.set(true);
 
@@ -129,7 +130,7 @@ function manualSelect() {
   manualStatusBox.classList.add("hidden");
 }
 
-// Reset to auto mode
+// Reset to automatic status mode
 function resetToAuto() {
   manualOverride = false;
   manualStatus = "";
