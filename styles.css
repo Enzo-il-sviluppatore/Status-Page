@@ -1,64 +1,24 @@
-/* General Styling */
+/* Reset + Base Font */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #0f0f0f;
-  color: #eee;
+  font-family: 'Trebuchet MS', sans-serif;
   margin: 0;
   padding: 0;
+  background: url('background.jpg') center/cover no-repeat fixed;
+  color: #eee;
   overflow-x: hidden;
+  text-align: center;
 }
 
-.container {
+/* Glass effect wrapper for everything */
+.container, header, main, footer {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   padding: 2rem;
+  margin: 2rem auto;
   max-width: 800px;
-  margin: auto;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  cursor: pointer;
-}
-
-.status {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  display: inline-block;
-  margin-top: 0.5rem;
-}
-
-main section {
-  margin-bottom: 2rem;
-}
-
-footer {
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 3rem;
-  opacity: 0.6;
-}
-
-/* Status colors */
-.status.online {
-  background-color: #00c7a5;
-}
-
-.status.sleeping {
-  background-color: #555;
-}
-
-.status.offline {
-  background-color: #777;
-}
-
-.status.school {
-  background-color: #369;
-}
-
-.status.break {
-  background-color: #f5a623;
 }
 
 /* Loader screen */
@@ -92,7 +52,53 @@ footer {
   }
 }
 
-/* Glassmorphism popup styling */
+/* Status box */
+.status {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* Countdown */
+#countdown {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Status colors */
+.status.online {
+  background-color: #00c7a5;
+}
+.status.sleeping {
+  background-color: #555;
+}
+.status.offline {
+  background-color: #777;
+}
+.status.school {
+  background-color: #369;
+}
+.status.break {
+  background-color: #f5a623;
+}
+
+/* Section spacing */
+main section {
+  margin-bottom: 2rem;
+}
+
+/* Footer */
+footer {
+  font-size: 0.9rem;
+  margin-top: 3rem;
+  opacity: 0.6;
+}
+
+/* Glassmorphism overlays */
 .glass {
   position: fixed;
   top: 50%;
@@ -122,6 +128,7 @@ footer {
   width: 100%;
   backdrop-filter: blur(10px);
   outline: none;
+  text-align: center;
 }
 
 .glass button {
@@ -141,7 +148,7 @@ footer {
   background-color: #00a88b;
 }
 
-/* Utility class */
+/* Hide utility */
 .hidden {
   display: none;
 }
