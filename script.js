@@ -6,13 +6,23 @@ const loader = document.getElementById("loader");
 let manualOverride = localStorage.getItem("manualOverride") === "true";
 let manualStatus = localStorage.getItem("manualStatus") || "";
 
-window.addEventListener("load", () => {
+setTimeout(() => {
+  loader.style.opacity = "0";
   setTimeout(() => {
     loader.style.display = "none";
     document.querySelector(".container").style.display = "block";
+    document.querySelector(".container").style.opacity = "1";
     getStatus();
-  }, 5000);
-});
+  }, 800); // wait for fade-out to finish
+}, 5000); // <-- loader time (change this to whatever you want)
+
+let dotIndex = 0;
+const dotsEl = document.getElementById("dots");
+
+setInterval(() => {
+  dotIndex = (dotIndex + 1) % 4;
+  dotsEl.textContent = '.'.repeat(dotIndex || 1);
+}, 500);
 
 function getStatus() {
   if (manualOverride && manualStatus) {
