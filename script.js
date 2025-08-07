@@ -1,78 +1,35 @@
-// Firebase setup
-const firebaseConfig = {
-  apiKey: "AIzaSyBS3R4MIYvo3rWvFlmT3anBnpPRMyC3wdA",
-  authDomain: "enzostatus-e717f.firebaseapp.com",
-  databaseURL: "https://enzostatus-e717f-default-rtdb.firebaseio.com",
-  projectId: "enzostatus-e717f",
-  storageBucket: "enzostatus-e717f.appspot.com",
-  messagingSenderId: "232951174632",
-  appId: "1:232951174632:web:d2d57c74ac1069fd4c405d"
-};
-
+// Firebase init
+const firebaseConfig = { /* YOUR CONFIG HERE */ };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-const statusRef = db.ref("status");
-const manualRef = db.ref("manualOverride");
+const statusRef = db.ref('status');
+const manualRef = db.ref('manualOverride');
 
-// DOM refs
-const statusEl = document.getElementById("status");
-const countdownEl = document.getElementById("countdown");
-const manualBox = document.getElementById("manual-status");
+const loader = document.getElementById('loader');
+const main = document.getElementById('mainContent');
+const statusText = document.getElementById('statusText');
+const countdown = document.getElementById('countdown');
+const currentList = document.getElementById('currentProjects');
+const upcomingList = document.getElementById('upcomingProjects');
+const modal = document.getElementById('passwordModal');
+const enzoLink = document.getElementById('enzo-status-text');
 
-const passwordPopup = document.getElementById("password-popup");
-const passwordInput = document.getElementById("password-input");
-const passwordSubmit = document.getElementById("password-submit");
-const passwordCancel = document.getElementById("password-cancel");
-const enzoStatus = document.getElementById("enzo-status-text");
-
-enzoStatus.addEventListener("click", () => {
-  passwordInput.value = "";
-  passwordPopup.classList.remove("hidden");
-  passwordInput.focus();
-});
-
-passwordSubmit.addEventListener("click", () => {
-  if (passwordInput.value === "yourPasswordHere") {
-    manualBox.classList.remove("hidden");
-    passwordPopup.classList.add("hidden");
-  } else {
-    alert("Incorrect password.");
-  }
-});
-
-passwordCancel.addEventListener("click", () => {
-  passwordPopup.classList.add("hidden");
-});
-
-// Loader dots + fade
-const dots = document.getElementById("dots");
-let dotCount = 1;
-setInterval(() => {
-  dotCount = (dotCount % 3) + 1;
-  dots.textContent = ".".repeat(dotCount);
-}, 500);
-
-window.addEventListener("load", () => {
+window.onload = () => {
   setTimeout(() => {
-    document.getElementById("loader").style.opacity = "0";
+    loader.style.opacity = '0';
     setTimeout(() => {
-      document.getElementById("loader").style.display = "none";
-      document.body.classList.add("loaded");
-      loadStatus();
+      loader.style.display = 'none';
+      document.body.classList.add('loaded');
+      listenStatus();
       loadProjects();
-    }, 1000);
+    }, 800);
   }, 2000);
-});
+};
 
-// Status handling
-function loadStatus() {
-  manualRef.on("value", (snap) => {
-    const isManual = snap.val();
-    if (isManual) {
-      statusRef.once("value").then(snap => {
-        const val = snap.val();
-        updateStatus(val);
-      });
+function listenStatus() {
+  manualRef.on('value', snap => {
+    if (snap.val()) {
+      statusRef.once('value').then(s => updateStatus(s.val()));
     } else {
       autoStatus();
     }
@@ -80,71 +37,45 @@ function loadStatus() {
 }
 
 function autoStatus() {
-  const now = new Date();
-  const estHour = (now.getUTCHours() - 4 + 24) % 24;
-  const day = now.getDay();
-
-  let status = "Online";
-
-  if (estHour >= 22 || estHour < 6) status = "Sleeping";
-  else if (estHour >= 7 && estHour < 14 && day >= 1 && day <= 5) status = "At School";
-  else if (estHour >= 14 && estHour < 15) status = "On Break";
-
-  updateStatus(status);
+  const h = (new Date().getUTCHours()-4+24)%24;
+  const d = new Date().getDay();
+  let st = 'Online';
+  if (h>=22||h<6) st='Sleeping';
+  else if (h>=7&&h<14&&d>=1&&d<=5) st='At School';
+  else if (h>=14&&h<15) st='On Break';
+  updateStatus(st);
 }
 
-function updateStatus(status) {
-  statusEl.textContent = status;
-  statusEl.className = "status " + status.toLowerCase().replace(/\s/g, "");
-
-  if (status === "Sleeping") {
-    const now = new Date();
-    const wake = new Date();
-    wake.setUTCHours(10, 30, 0, 0); // 6:30 AM EST
-    if (now > wake) wake.setDate(wake.getDate() + 1);
-    const diff = wake - now;
-    const hrs = Math.floor(diff / 3600000);
-    const mins = Math.floor((diff % 3600000) / 60000);
-    countdownEl.textContent = `Back in ${hrs}h ${mins}m`;
-  } else {
-    countdownEl.textContent = "";
-  }
+function updateStatus(st) {
+  statusText.textContent = st;
+  countdown.textContent = st==='Sleeping'? 
+    `Back in ${Math.floor(((new Date().setUTCHours(10,30,0)-Date.now())/(3600000))) || 0}h` : '';
 }
 
-// Manual override
-document.getElementById("set-status-btn").addEventListener("click", () => {
-  const selected = document.getElementById("status-select").value;
-  if (!selected) return;
-  statusRef.set(selected);
+enzoLink.onclick = () => { modal.style.display = 'flex' };
+document.getElementById('passwordSubmit').onclick = () => {
+  if (document.getElementById('passwordInput').value === 'yourPassword'){
+    manualRef.set(true);
+    statusRef.set(document.getElementById('statusSelector')?.value || 'Online');
+    modal.style.display = 'none';
+  } else alert('bad pass');
+};
+document.getElementById('passwordCancel').onclick = () => modal.style.display = 'none';
+
+document.getElementById('statusSelector')?.onchange = () => {
+  statusRef.set(document.getElementById('statusSelector').value);
   manualRef.set(true);
-  updateStatus(selected);
-  manualBox.classList.add("hidden");
-});
-
-document.getElementById("reset-status-btn").addEventListener("click", () => {
-  manualRef.set(false);
-  statusRef.set("");
-  manualBox.classList.add("hidden");
-  autoStatus();
-});
-
-// Project data
-const currentProjects = ["IFE system", "Grill UI", "Status Site"];
-const upcomingProjects = ["Flight Tracker", "Live Check-in System"];
+};
 
 function loadProjects() {
-  const currentList = document.getElementById("current-projects-list");
-  const upcomingList = document.getElementById("upcoming-projects-list");
-
-  currentProjects.forEach(proj => {
-    const li = document.createElement("li");
-    li.textContent = proj;
+  ['IFE', 'Status Site', 'Grill UI'].forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p;
     currentList.appendChild(li);
   });
-
-  upcomingProjects.forEach(proj => {
-    const li = document.createElement("li");
-    li.textContent = proj;
+  ['Flight Tracker','Check-In System'].forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p;
     upcomingList.appendChild(li);
   });
 }
