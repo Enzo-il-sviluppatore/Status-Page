@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Enzo's Status</title>
-  <link rel="stylesheet" href="styles.css" />
-
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
+  <div id="loader">
+    <h1><strong>Welcome</strong></h1>
+    <p>Loading status<span id="dots">.</span></p>
+  </div>
+
   <div class="container" id="mainContent">
-    <h1 class="title">Welcome</h1>
-    <p class="status-label">Current Status:</p>
-    <div class="status-boxes">
-      <button class="status-box">Online</button>
-      <button class="status-box">On Break</button>
-      <button class="status-box">Offline</button>
-      <button class="status-box">Sleeping</button>
-      <button class="status-box">At School</button>
+    <p id="enzo-status-text" class="clickable">Enzo's Status</p>
+    <div class="status-box glassy">
+      <h2>Status</h2>
+      <p id="statusText">Loading...</p>
+      <div id="countdown"></div>
+    </div>
+
+    <div class="projects glassy">
+      <h2>Current Projects</h2>
+      <ul id="currentProjects"></ul>
+    </div>
+
+    <div class="projects glassy">
+      <h2>Upcoming Projects</h2>
+      <ul id="upcomingProjects"></ul>
     </div>
   </div>
 
-  <p class="footer-link" id="statusLink">Enzo's Status</p>
-
-  <!-- Password Modal -->
   <div id="passwordModal" class="modal">
-    <div class="modal-content">
-      <p>Enter Password:</p>
-      <input type="password" id="passwordInput" />
-      <button id="submitPassword">Enter</button>
+    <div class="modal-content glassy">
+      <input type="password" id="passwordInput" placeholder="Password" />
+      <button id="passwordSubmit">Submit</button>
+      <button id="passwordCancel">Cancel</button>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>Made with love by Vincenzo</p>
-    <p>Make sure to refresh for an accurate state as it updates automatically and manually!</p>
+  <footer class="glassy">
+    <p>Made with ❤️ by Vincenzo</p>
+    <p>Refresh for accurate sync</p>
   </footer>
 
   <script src="script.js"></script>
