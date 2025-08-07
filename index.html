@@ -4,48 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Enzo's Status</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="background"></div>
-
-  <div class="glass-container glassy-box">
-    <h1 id="status-text">Status: Online</h1>
-
-    <div class="status-controls glassy-box">
-      <button onclick="setStatus('Online')">Online</button>
-      <button onclick="setStatus('On Break')">On Break</button>
-      <button onclick="setStatus('Offline')">Offline</button>
-      <button onclick="setStatus('Sleeping')">Sleeping</button>
-      <button onclick="setStatus('At School')">At School</button>
-    </div>
-
-    <div class="projects glassy-box">
-      <h2>Current Projects</h2>
-      <ul>
-        <li>Glideways Booking UI</li>
-        <li>IFE System for Roblox</li>
-      </ul>
-    </div>
-
-    <div class="projects glassy-box">
-      <h2>Upcoming Projects</h2>
-      <ul>
-        <li>Loyalty Program Integration</li>
-        <li>Status Auto-Sync w/ Firebase</li>
-      </ul>
+  <div class="container" id="mainContent">
+    <h1 class="title">Welcome</h1>
+    <p class="status-label">Current Status:</p>
+    <div class="status-boxes">
+      <button class="status-box">Online</button>
+      <button class="status-box">On Break</button>
+      <button class="status-box">Offline</button>
+      <button class="status-box">Sleeping</button>
+      <button class="status-box">At School</button>
     </div>
   </div>
-  <footer>
-    <p>Made with ❤️ by Vincenzo</p>
-    <p>Refresh to sync status across devices</p>
+
+  <p class="footer-link" id="statusLink">Enzo's Status</p>
+
+  <!-- Password Modal -->
+  <div id="passwordModal" class="modal">
+    <div class="modal-content">
+      <p>Enter Password:</p>
+      <input type="password" id="passwordInput" />
+      <button id="submitPassword">Enter</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Enzo's Project Hub &copy; 2025</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
-<script>
-  function setStatus(status) {
-    document.getElementById("status-text").textContent = "Status: " + status;
-  }
-</script>
 </html>
-
-
