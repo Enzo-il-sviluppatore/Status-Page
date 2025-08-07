@@ -2,68 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Enzo's Status & Projects</title>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enzo's Status</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <!-- Loader -->
-  <div id="loader">
-    <h1><strong>Welcome</strong></h1>
-    <p>Give me one moment to load my current status<span id="dots">.</span></p>
-  </div>
+  <div class="background"></div>
 
-  <!-- Main Container -->
-  <div class="container">
-    <p id="enzo-status-text">Enzo's Status</p>
+  <div class="glass-container glassy-box">
+    <h1 id="status-text">Status: Online</h1>
 
-    <div id="status" class="status">Loading...</div>
-    <div id="countdown"></div>
-
-    <div id="manual-status" class="hidden">
-      <select id="status-select">
-        <option value="">Select a status</option>
-        <option value="Online">Online</option>
-        <option value="Sleeping">Sleeping</option>
-        <option value="At School">At School</option>
-        <option value="On Break">On Break</option>
-        <option value="Offline">Offline</option>
-      </select>
-      <button id="set-status-btn">Set Status</button>
-      <button id="reset-status-btn">Back to Auto Mode</button>
+    <div class="status-controls glassy-box">
+      <button onclick="setStatus('Online')">Online</button>
+      <button onclick="setStatus('On Break')">On Break</button>
+      <button onclick="setStatus('Offline')">Offline</button>
+      <button onclick="setStatus('Sleeping')">Sleeping</button>
+      <button onclick="setStatus('At School')">At School</button>
     </div>
 
-    <section id="projects">
+    <div class="projects glassy-box">
       <h2>Current Projects</h2>
-      <ul id="current-projects-list" class="project-list"></ul>
+      <ul>
+        <li>Glideways Booking UI</li>
+        <li>IFE System for Roblox</li>
+      </ul>
+    </div>
 
+    <div class="projects glassy-box">
       <h2>Upcoming Projects</h2>
-      <ul id="upcoming-projects-list" class="project-list"></ul>
-    </section>
-  </div>
-
-  <!-- Password Popup -->
-  <div id="password-popup" class="popup hidden">
-    <div class="popup-content">
-      <h3>Enter Password</h3>
-      <input type="password" id="password-input" placeholder="Password" />
-      <div class="popup-buttons">
-        <button id="password-submit">Submit</button>
-        <button id="password-cancel">Cancel</button>
-      </div>
+      <ul>
+        <li>Loyalty Program Integration</li>
+        <li>Status Auto-Sync w/ Firebase</li>
+      </ul>
     </div>
   </div>
-
   <footer>
     <p>Made with ❤️ by Vincenzo</p>
     <p>Refresh to sync status across devices</p>
   </footer>
-
-  <script src="script.js"></script>
 </body>
+<script>
+  function setStatus(status) {
+    document.getElementById("status-text").textContent = "Status: " + status;
+  }
+</script>
 </html>
+
+
