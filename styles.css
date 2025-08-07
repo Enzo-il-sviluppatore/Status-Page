@@ -1,23 +1,25 @@
 body {
   font-family: 'Trebuchet MS', sans-serif;
-  background-color: #111;
-  color: white;
-  text-align: center;
+  background: url("your-bg-image.webp") no-repeat center center fixed;
+  background-size: cover;
   margin: 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
 }
 
 .container {
   display: none;
   opacity: 0;
   transition: opacity 1s ease;
-  z-index: 1;
   position: relative;
   max-width: 480px;
-  margin: 0 auto;
-  background: rgba(255 255 255 / 0.08);
+  margin: 5vh auto;
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border-radius: 16px;
   padding: 2rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.25);
 }
 
 body.loaded .container {
@@ -25,110 +27,125 @@ body.loaded .container {
   opacity: 1;
 }
 
-.status {
+.title {
   font-size: 2rem;
-  margin: 1rem 0;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-#countdown {
-  font-size: 1rem;
-  color: #aaa;
+.status-label {
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 
-.project-list {
-  list-style: none;
-  padding: 0;
-}
-
-.project-list li::before {
-  content: "• ";
-  color: #00c7a5;
-  margin-right: 5px;
-}
-
-footer {
-  margin-top: 2rem;
-  color: #ccc;
-  font-size: 0.8rem;
-}
-
-/* Loader */
-#loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: #111;
-  color: white;
+.status-boxes {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   justify-content: center;
-  align-items: center;
-  font-family: 'Trebuchet MS', sans-serif;
-  z-index: 1000;
-  transition: opacity 1s ease;
 }
 
-/* Popup */
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.6);
+.status-box {
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
   backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
-.popup-content {
-  background: rgba(255, 255, 255, 0.08);
+.status-box::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -30%;
+  width: 160%;
+  height: 160%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+  transform: rotate(25deg);
+  pointer-events: none;
+  filter: blur(10px);
+  z-index: 0;
+}
+
+.status-box:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+}
+
+.footer-link {
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #00c7a5;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.4);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.12);
   padding: 2rem;
   border-radius: 12px;
   text-align: center;
-  color: white;
-  font-family: 'Trebuchet MS', sans-serif;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 
-.popup input {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: none;
-  margin-top: 1rem;
-  font-size: 1rem;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.popup-buttons {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.popup button {
-  background-color: #00c7a5;
-  border: none;
+.modal-content input {
+  margin: 1rem 0;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.modal-content button {
+  background: #00c7a5;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
   color: white;
   cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.2s ease;
+  transition: background 0.2s ease;
 }
 
-.popup button:hover {
-  background-color: #009b85;
+.modal-content button:hover {
+  background: #009f85;
 }
 
-.hidden {
-  display: none;
+/* Footer */
+.footer {
+  position: relative;
+  bottom: 0;
+  margin-top: 4rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  color: #fff;
 }
