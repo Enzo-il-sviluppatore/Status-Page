@@ -1,50 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Enzo's Status</title>
-  <!-- Firebase SDKs -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> Mio Stato</title>
+
+  <!-- Firebase (compat) - keep these if you plan to enable Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <link rel="stylesheet" href="styles.css"/>
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="loader">
-    <h1><strong>Welcome</strong></h1>
-    <p>Loading status<span id="dots">.</span></p>
+
+  <!-- LOADER -->
+  <div id="loader" class="loader">
+    <h1 id="welcome-title">Welcome</h1>
+    <p id="loader-text">Give me one moment to load my current status<span id="dots">.</span></p>
   </div>
 
-  <div class="container" id="mainContent">
-    <p id="enzo-status-text" class="clickable">Enzo's Status</p>
-    <div class="status-box glassy">
-      <h2>Status</h2>
-      <p id="statusText">Loading...</p>
-      <div id="countdown"></div>
-    </div>
+  <!-- MAIN -->
+  <div class="container" id="main" aria-hidden="true">
+    <header class="glass-top">
+      <p id="enzo-title" class="clickable">Enzo's Status</p>
+      <div class="status-wrapper">
+        <div id="status" class="status-label">Loading...</div>
+        <div id="countdown" class="countdown"></div>
+      </div>
+    </header>
 
-    <div class="projects glassy">
-      <h2>Current Projects</h2>
-      <ul id="currentProjects"></ul>
-    </div>
+    <main>
+      <section class="glass-panel">
+        <h2>Current Projects</h2>
+        <ul id="current-projects" class="project-list"></ul>
+      </section>
 
-    <div class="projects glassy">
-      <h2>Upcoming Projects</h2>
-      <ul id="upcomingProjects"></ul>
+      <section class="glass-panel">
+        <h2>Upcoming Projects</h2>
+        <ul id="upcoming-projects" class="project-list"></ul>
+      </section>
+    </main>
+
+    <footer class="glass-footer" id="page-footer">
+      <p>Made with ❤️ by Vincenzo</p>
+<p>Make sure to refresh for an accurate status as it updates automatically and manually</p>
+<p>I translated it into english for anyone without an italian IP ❤️ (I am so kind)</p>
+      <p style="font-size:.8rem; opacity:.8">Refresh for accurate sync (auto/manual)</p>
+    </footer>
+  </div>
+
+  <!-- PASSWORD MODAL (centered glass modal) -->
+  <div id="password-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-glass">
+      <h3>Enter password</h3>
+      <input id="password-input" type="password" placeholder="••••••••" autocomplete="off" />
+      <div class="modal-actions">
+        <button id="password-ok">Submit</button>
+        <button id="password-cancel">Cancel</button>
+      </div>
     </div>
   </div>
 
-  <div id="passwordModal" class="modal">
-    <div class="modal-content glassy">
-      <input type="password" id="passwordInput" placeholder="Password" />
-      <button id="passwordSubmit">Submit</button>
-      <button id="passwordCancel">Cancel</button>
+  <!-- MANUAL STATUS POPUP (glassy panel) -->
+  <div id="manual-panel" class="manual-panel hidden" aria-hidden="true">
+    <div class="manual-glass">
+      <label for="manual-select">Set status</label>
+      <select id="manual-select">
+        <option value="">-- Select --</option>
+        <option>Online</option>
+        <option>Sleeping</option>
+        <option>At School</option>
+        <option>On Break</option>
+        <option>Offline</option>
+      </select>
+      <button id="manual-set">Set</button>
+      <button id="manual-reset">Back to Auto</button>
     </div>
   </div>
-
-  <footer class="glassy">
-    <p>Made with ❤️ by Vincenzo</p>
-    <p>Refresh for accurate sync</p>
-  </footer>
 
   <script src="script.js"></script>
 </body>
