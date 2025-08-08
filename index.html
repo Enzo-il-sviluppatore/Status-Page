@@ -1,83 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> Mio Stato</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enzo's Status & Projects</title>
 
-  <!-- Firebase (compat) - keep these if you plan to enable Firebase -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <!-- LOADER -->
-  <div id="loader" class="loader">
-    <h1 id="welcome-title">Welcome</h1>
-    <p id="loader-text">Give me one moment to load my current status<span id="dots">.</span></p>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-content">
+      <h1>Welcome</h1>
+      <p>Give me one moment to load my current status<span id="dots">.</span></p>
+    </div>
   </div>
 
-  <!-- MAIN -->
-  <div class="container" id="main" aria-hidden="true">
-    <header class="glass-top">
-      <p id="enzo-title" class="clickable">Enzo's Status</p>
-      <div class="status-wrapper">
-        <div id="status" class="status-label">Loading...</div>
-        <div id="countdown" class="countdown"></div>
-      </div>
-    </header>
+  <!-- Main container -->
+  <div class="container hidden">
+    <p id="enzo-status-text">Enzo's Status</p>
+    <div id="status" class="status">Loading...</div>
+    <div id="countdown"></div>
 
-    <main>
-      <section class="glass-panel">
-        <h2>Current Projects</h2>
-        <ul id="current-projects" class="project-list"></ul>
-      </section>
+    <div id="manual-status" class="hidden">
+      <select id="status-select" aria-label="Select status">
+        <option value="">Select a status</option>
+        <option value="Online">Online</option>
+        <option value="Sleeping">Sleeping</option>
+        <option value="At School">At School</option>
+        <option value="On Break">On Break</option>
+        <option value="Offline">Offline</option>
+      </select>
+      <button id="set-status-btn">Set Status</button>
+      <button id="reset-status-btn">Back to Auto Mode</button>
+    </div>
 
-      <section class="glass-panel">
-        <h2>Upcoming Projects</h2>
-        <ul id="upcoming-projects" class="project-list"></ul>
-      </section>
-    </main>
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Current Projects</h2>
+      <ul id="current-projects-list" class="project-list"></ul>
 
-    <footer class="glass-footer" id="page-footer">
-      <p>Made with ❤️ by Vincenzo</p>
-<p>Make sure to refresh for an accurate status as it updates automatically and manually</p>
-<p>I translated it into english for anyone without an italian IP ❤️ (I am so kind)</p>
+      <h2>Upcoming Projects</h2>
+      <ul id="upcoming-projects-list" class="project-list"></ul>
+    </section>
+  </div>
+
+  <!-- Password popup -->
+  <div id="password-popup" class="glass hidden">
+    <label for="password-input">Enter password:</label>
+    <input type="password" id="password-input" autocomplete="off" />
+    <button id="password-submit">Submit</button>
+    <button id="password-cancel">Cancel</button>
+  </div>
+
+  <footer class="glass">
+        <p>Made with ❤️ by Vincenzo</p>
+        <p>Make sure to refresh for an accurate status as it updates automatically and manually</p>
+        <p>I translated it into english for anyone without an italian IP ❤️ (I am so kind)</p>
       <p style="font-size:.8rem; opacity:.8">Refresh for accurate sync (auto/manual)</p>
     </footer>
-  </div>
-
-  <!-- PASSWORD MODAL (centered glass modal) -->
-  <div id="password-modal" class="modal hidden" role="dialog" aria-modal="true">
-    <div class="modal-glass">
-      <h3>Enter password</h3>
-      <input id="password-input" type="password" placeholder="••••••••" autocomplete="off" />
-      <div class="modal-actions">
-        <button id="password-ok">Submit</button>
-        <button id="password-cancel">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MANUAL STATUS POPUP (glassy panel) -->
-  <div id="manual-panel" class="manual-panel hidden" aria-hidden="true">
-    <div class="manual-glass">
-      <label for="manual-select">Set status</label>
-      <select id="manual-select">
-        <option value="">-- Select --</option>
-        <option>Online</option>
-        <option>Sleeping</option>
-        <option>At School</option>
-        <option>On Break</option>
-        <option>Offline</option>
-      </select>
-      <button id="manual-set">Set</button>
-      <button id="manual-reset">Back to Auto</button>
-    </div>
-  </div>
-
   <script src="script.js"></script>
 </body>
 </html>
+
