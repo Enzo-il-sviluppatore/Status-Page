@@ -1,69 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Enzo's Status & Projects</title>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enzo's Status</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Loader -->
   <div id="loader">
-    <div class="loader-content">
-      <h1>Welcome</h1>
-      <p>Give me one moment to load my current status<span id="dots">.</span></p>
-    </div>
+    <h1>Welcome<span id="dots">.</span></h1>
   </div>
 
-  <!-- Main container -->
+  <!-- Main Container -->
   <div class="container hidden">
     <h2 id="enzo-status-text">Enzo's Status</h2>
     <p id="status" class="status">Loading...</p>
     <div id="countdown"></div>
-
-    <div id="manual-status" class="hidden">
-      <select id="status-select" aria-label="Select status">
-        <option value="">Select a status</option>
-        <option value="Online">Online</option>
-        <option value="Sleeping">Sleeping</option>
-        <option value="At School">At School</option>
-        <option value="On Break">On Break</option>
-        <option value="Offline">Offline</option>
-      </select>
-      <button id="set-status-btn">Set Status</button>
-      <button id="reset-status-btn">Back to Auto Mode</button>
-    </div>
-
-    <!-- Projects -->
-    <section id="projects">
-      <h2>Current Projects</h2>
-      <ul id="current-projects-list" class="project-list"></ul>
-
-      <h2>Upcoming Projects</h2>
-      <ul id="upcoming-projects-list" class="project-list"></ul>
-    </section>
   </div>
 
-  <!-- Password popup -->
+  <!-- Projects Section -->
+  <main class="container hidden">
+    <section>
+      <h3>Projects</h3>
+      <ul>
+        <li><a href="#">Project 1</a></li>
+        <li><a href="#">Project 2</a></li>
+        <li><a href="#">Project 3</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Manual Status Controls -->
+  <div id="manual-status" class="hidden">
+    <select id="status-select">
+      <option value="">-- Select Status --</option>
+      <option value="Online">Online</option>
+      <option value="School">School</option>
+      <option value="Break">Break</option>
+      <option value="Sleeping">Sleeping</option>
+    </select>
+    <button id="set-status-btn">Set Status</button>
+    <button id="reset-status-btn">Cancel</button>
+  </div>
+
+  <!-- Password Popup -->
   <div id="password-popup" class="glass hidden">
-    <label for="password-input">Enter password:</label>
-    <input type="password" id="password-input" autocomplete="off" />
+    <h3>Enter Password</h3>
+    <input type="password" id="password-input" placeholder="Password">
     <button id="password-submit">Submit</button>
     <button id="password-cancel">Cancel</button>
   </div>
 
-  <footer class="glass">
+  <!-- Footer -->
+   <footer class="glass">
         <p>Made with ❤️ by Vincenzo</p>
         <p>Make sure to refresh for an accurate status as it updates automatically and manually</p>
-        <p>I translated it into english for anyone without an italian IP ❤️ (I am so kind)</p>
-      <p style="font-size:.8rem; opacity:.8">Refresh for accurate sync (auto/manual)</p>
+      <p style="font-size:.8rem; opacity:.8">I translated it into english for anyone without an italian IP ❤️ (I am so kind)</p>
     </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <!-- Main Script -->
   <script src="script.js"></script>
 </body>
 </html>
 
+ 
