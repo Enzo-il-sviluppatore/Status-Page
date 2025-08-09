@@ -1,4 +1,3 @@
-// ===== Firebase Config =====
 const firebaseConfig = {
   apiKey: "AIzaSyBS3R4MIYvo3rWvFlmT3anBnpPRMyC3wdA",
   authDomain: "enzostatus-e717f.firebaseapp.com",
@@ -13,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// ===== Loader Animation =====
+// Loader animation
 const loader = document.getElementById('loader');
 const dots = document.getElementById('dots');
 let dotCount = 1;
@@ -27,22 +26,24 @@ setTimeout(() => {
   loader.style.opacity = '0';
   setTimeout(() => {
     loader.classList.add('hidden');
-    document.querySelector('.container').classList.remove('hidden');
+    document.querySelectorAll('.container, footer, header, main').forEach(el => {
+      el.classList.remove('hidden');
+    });
   }, 800);
 }, 2000);
 
-// ===== Elements =====
+// Elements
 const statusText = document.getElementById('status');
-const enzoStatusText = document.getElementById('enzo-status-text');
-const countdownEl = document.getElementById('countdown');
 const manualStatusDiv = document.getElementById('manual-status');
+const enzoStatusText = document.getElementById('enzo-status-text');
 const passwordPopup = document.getElementById('password-popup');
 const passwordInput = document.getElementById('password-input');
 
-// ===== Password System =====
+// Password system
 const PASSWORD = "test123";
 enzoStatusText.addEventListener('click', () => {
   passwordPopup.classList.remove('hidden');
+  passwordPopup.style.zIndex = "99999"; // make sure it’s clickable
 });
 document.getElementById('password-submit').addEventListener('click', () => {
   if (passwordInput.value === PASSWORD) {
@@ -56,69 +57,7 @@ document.getElementById('password-cancel').addEventListener('click', () => {
   passwordPopup.classList.add('hidden');
 });
 
-// ===== Schedule (in EST) =====
-const schedule = [
-  { time: "06:00", status: "Online" },
-  { time: "08:00", status: "School" },
-  { time: "15:00", status: "Break" },
-  { time: "16:00", status: "Online" },
-  { time: "23:00", status: "Sleeping" }
-];
-
-// ===== Auto Status Logic =====
-function getCurrentESTDate() {
-  return new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
-}
-
-function updateStatusFromSchedule() {
-  const now = getCurrentESTDate();
-  const currentTimeStr = now.toTimeString().slice(0,5);
-
-  let currentStatus = schedule[0].status;
-  for (let i = 0; i < schedule.length; i++) {
-    if (currentTimeStr >= schedule[i].time) {
-      currentStatus = schedule[i].status;
-    }
-  }
-
-  db.ref('status').set(currentStatus);
-  updateCountdown();
-}
-
-function updateCountdown() {
-  const now = getCurrentESTDate();
-  let nextChange = null;
-
-  for (let i = 0; i < schedule.length; i++) {
-    const [h, m] = schedule[i].time.split(":").map(Number);
-    const changeTime = new Date(now);
-    changeTime.setHours(h, m, 0, 0);
-    if (changeTime > now) {
-      nextChange = changeTime;
-      break;
-    }
-  }
-  if (!nextChange) {
-    // Next change is tomorrow
-    const [h, m] = schedule[0].time.split(":").map(Number);
-    nextChange = new Date(now);
-    nextChange.setDate(nextChange.getDate() + 1);
-    nextChange.setHours(h, m, 0, 0);
-  }
-
-  const diffMs = nextChange - now;
-  const mins = Math.floor(diffMs / 60000);
-  const secs = Math.floor((diffMs % 60000) / 1000);
-
-  countdownEl.textContent = `Next change in ${mins}m ${secs}s`;
-}
-
-// Update status & countdown every minute
-setInterval(updateStatusFromSchedule, 60000);
-setInterval(updateCountdown, 1000);
-updateStatusFromSchedule();
-
-// ===== Listen for Changes =====
+// Auto status updates
 db.ref('status').on('value', snapshot => {
   const val = snapshot.val();
   if (val) {
@@ -127,7 +66,59 @@ db.ref('status').on('value', snapshot => {
   }
 });
 
-// ===== Manual Status Change =====
+// Countdown logic (hrs mins secs)
+function updateCountdown(targetTime) {
+  const now = new Date();
+  let diff = Math.floor((targetTime - now) / 1000);
+  if (diff < 0) diff = 0;
+
+  const hours = Math.floor(diff / 3600);
+  const minutes = Math.floor((diff % 3600) / 60);
+  const seconds = diff % 60;
+
+  document.getElementById('countdown').textContent =
+    `Next change in ${hours}hrs ${minutes}mins ${seconds}secs`;
+}
+
+// Example auto-change schedule (EST)
+const schedule = [
+  { time: "08:00", status: "Online" },
+  { time: "12:00", status: "School" },
+  { time: "16:00", status: "Break" },
+  { time: "22:00", status: "Sleeping" }
+];
+
+function checkSchedule() {
+  const now = new Date();
+  now.setSeconds(0, 0);
+
+  let nextChange = null;
+
+  for (let i = 0; i < schedule.length; i++) {
+    const [hours, minutes] = schedule[i].time.split(":").map(Number);
+    const changeTime = new Date(now);
+    changeTime.setHours(hours, minutes, 0, 0);
+
+    if (now < changeTime) {
+      nextChange = changeTime;
+      break;
+    }
+  }
+
+  // If no nextChange found today, take first schedule tomorrow
+  if (!nextChange) {
+    const [hours, minutes] = schedule[0].time.split(":").map(Number);
+    nextChange = new Date(now);
+    nextChange.setDate(nextChange.getDate() + 1);
+    nextChange.setHours(hours, minutes, 0, 0);
+  }
+
+  updateCountdown(nextChange);
+}
+
+setInterval(checkSchedule, 1000);
+
+// Manual status
 document.getElementById('set-status-btn').addEventListener('click', () => {
   const newStatus = document.getElementById('status-select').value;
   if (newStatus) {
