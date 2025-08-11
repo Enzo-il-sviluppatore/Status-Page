@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currList = document.getElementById("current-projects");
   const upList = document.getElementById("upcoming-projects");
 
-  const PASSWORD = "test123"; // change this
+  const PASSWORD = "VBal55001"; // change this
 
   // loader dots reliable
   let dotCount = 1;
