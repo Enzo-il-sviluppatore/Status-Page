@@ -102,9 +102,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const schedule = [
     { time: "06:30", status: "Online" },   // example wake time
     { time: "07:00", status: "At School" },
-    { time: "15:00", status: "On Break" },
-    { time: "15:30", status: "Online" },
-    { time: "22:00", status: "Sleeping" }
+    { time: "15:50", status: "Sports" },
+    { time: "18:00", status: "Offline" },
+    { time: "19:30", status: "Online" },
+    { time: "21:00", status: "Sleeping" }
   ];
 
   // helper: get current EST date object
