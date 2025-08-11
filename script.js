@@ -1,4 +1,3 @@
-// ---------- CONFIG ----------
 const firebaseConfig = {
   apiKey: "AIzaSyBS3R4MIYvo3rWvFlmT3anBnpPRMyC3wdA",
   authDomain: "enzostatus-e717f.firebaseapp.com",
@@ -14,7 +13,6 @@ const db = firebase.database();
 const statusRef = db.ref("status");
 const manualRef = db.ref("manualOverride");
 
-// ---------- STATE & DOM ----------
 let manualOverride = false;
 let manualStatus = "";
 
@@ -36,20 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const currList = document.getElementById("current-projects");
   const upList = document.getElementById("upcoming-projects");
 
-  const PASSWORD = "VBal55001"; // change this
+  const PASSWORD = "VBal55001"; 
 
-  // loader dots reliable
   let dotCount = 1;
   const dotInterval = setInterval(() => {
     dotCount = (dotCount % 3) + 1;
     dots.textContent = ".".repeat(dotCount);
   }, 500);
 
-  // load demo projects (replace with firebase later if desired)
   ["IFE system (Roblox)","Maura Training Center (Roblox)","Manifest Event Center (Roblox)","AiChai Cafe Training Center (Roblox)","Bar de Milano Ordering and Payment System (real life/non Roblox)"].forEach(p => { const li=document.createElement("li");li.textContent=p;currList.appendChild(li);});
   ["Amen Itliano Gioielli AI Customer Support/Booking (real life/non Roblox)","Confidential (real life/non Roblox)"].forEach(p => { const li=document.createElement("li");li.textContent=p;upList.appendChild(li);});
 
-  // hide loader then show main (fully remove loader to avoid blocking)
   setTimeout(() => {
     clearInterval(dotInterval);
     loader.style.opacity = "0";
@@ -57,19 +52,16 @@ document.addEventListener("DOMContentLoaded", () => {
       loader.style.display = "none";
       main.classList.remove("hidden");
       document.querySelectorAll(".panel, .footer").forEach(el => el.classList.remove("hidden"));
-      // start status system after UI visible
       startStatusSystem();
     }, 600);
   }, 5000);
 
-  // open password modal from both title and status text
   [enzoTitle, statusEl].forEach(el => el.addEventListener("click", () => {
     passwordInput.value = "";
     passwordModal.classList.remove("hidden");
     passwordInput.focus();
   }));
 
-  // password actions
   passwordOk.addEventListener("click", () => {
     if (passwordInput.value === PASSWORD) {
       passwordModal.classList.add("hidden");
@@ -82,25 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   passwordCancel.addEventListener("click", () => passwordModal.classList.add("hidden"));
 
-  // manual set
   manualSet.addEventListener("click", () => {
     const s = manualSelect.value;
     if (!s) return;
-    // write manual override and status to firebase so others see it
     statusRef.set(s).catch(console.error);
     manualRef.set(true).catch(console.error);
     manualPanel.classList.add("hidden");
   });
 
-  // manual reset => go back to auto
   manualReset.addEventListener("click", () => {
     manualRef.set(false).catch(console.error);
     manualPanel.classList.add("hidden");
   });
 
-  // Schedule for auto (EST times)
   const schedule = [
-    { time: "06:25", status: "Online" },   // example wake time
+    { time: "06:25", status: "Online" },   
     { time: "07:40", status: "At School" },
     { time: "15:50", status: "Sports" },
     { time: "18:00", status: "Offline" },
@@ -108,14 +96,14 @@ document.addEventListener("DOMContentLoaded", () => {
     { time: "21:00", status: "Sleeping" }
   ];
 
-  // helper: get current EST date object
+
   function getESTNow() {
     return new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
   }
 
   function computeAutoStatus() {
     const now = getESTNow();
-    const cur = now.getHours()*60 + now.getMinutes(); // minutes since midnight
+    const cur = now.getHours()*60 + now.getMinutes();
     let last = schedule[0].status;
     for (let i=0;i<schedule.length;i++){
       const [h,m] = schedule[i].time.split(":").map(Number);
@@ -125,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return last;
   }
 
-  // countdown to next schedule (hrs, mins, secs)
   function computeNextChange() {
     const now = getESTNow();
     for (let i=0;i<schedule.length;i++){
@@ -134,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
       t.setHours(h, m, 0, 0);
       if (t > now) return t;
     }
-    // tomorrow first schedule
+  
     const [h,m] = schedule[0].time.split(":").map(Number);
     const t = new Date(now);
     t.setDate(t.getDate()+1);
@@ -142,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return t;
   }
 
-  // update countdown text every second
   function startCountdownLoop() {
     setInterval(() => {
       let next = computeNextChange();
@@ -154,12 +140,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  // listen for firebase changes + handle manual override logic
+
   function startStatusSystem() {
-    // listen manual override flag first
+
     manualRef.on("value", mSnap => {
       manualOverride = !!mSnap.val();
-      // if manual, use statusRef value; if not, compute auto
+
       if (manualOverride) {
         statusRef.once("value").then(sSnap => {
           manualStatus = sSnap.val() || computeAutoStatus();
@@ -167,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
           statusEl.className = "status-label " + manualStatus.toLowerCase().replace(/\s+/g,"");
         }).catch(console.error);
       } else {
-        // set status to auto computed (and reflect in DB)
+
         const auto = computeAutoStatus();
         statusRef.set(auto).catch(console.error);
         statusEl.textContent = auto;
@@ -175,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, console.error);
 
-    // also update UI whenever status changes remotely
     statusRef.on("value", sSnap => {
       const val = sSnap.val();
       if (val) {
@@ -184,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, console.error);
 
-    // start countdown loop
+
     startCountdownLoop();
   }
 });
