@@ -1,75 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enzo's Status</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Enzo — Status</title>
+
+  <!-- Firebase (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Loader -->
-  <div id="loader">
-    <h1>Welcome</h1>
-    <p>Give me one moment to load my status<span id="dots">.</span></p>
+  <!-- LOADER -->
+  <div id="loader" class="loader">
+    <h1 id="welcome-title">Welcome</h1>
+    <p id="loader-text">Give me one moment to load my current status<span id="dots">.</span></p>
   </div>
 
-  <!-- Main Container -->
-  <div class="container hidden">
-    <h2 id="enzo-status-text">Enzo's Status</h2>
-    <p id="status" class="status">Loading...</p>
-    <div id="countdown"></div>
-  </div>
+  <!-- MAIN -->
+  <div id="main" class="main hidden" aria-hidden="true">
+    <header class="glass header">
+      <p id="enzo-status-text" class="clickable">Enzo's Status</p>
 
-  <!-- Projects Section -->
-  <section id="projects-section" class="hidden">
-  <h3>Current Projects</h3>
-  <ul id="current-projects">
-    <li>Project Alpha</li>
-    <li>Project Beta</li>
-  </ul>
+      <div class="status-wrapper">
+        <div id="status" class="status-label">Loading...</div>
+        <div id="countdown" class="countdown"></div>
+      </div>
+    </header>
 
-  <h3>Upcoming Projects</h3>
-  <ul id="upcoming-projects">
-    <li>Project Gamma</li>
-    <li>Project Delta</li>
-  </ul>
-</section>
+    <main class="content">
+      <section id="projects-section" class="glass panel">
+        <h3>Current Projects</h3>
+        <ul id="current-projects" class="project-list"></ul>
+      </section>
 
-  <!-- Manual Status Controls -->
-  <div id="manual-status" class="hidden">
-    <select id="status-select">
-      <option value="">-- Select Status --</option>
-      <option value="Online">Online</option>
-      <option value="School">School</option>
-      <option value="Break">Break</option>
-      <option value="Sleeping">Sleeping</option>
-    </select>
-    <button id="set-status-btn">Set Status</button>
-    <button id="reset-status-btn">Cancel</button>
-  </div>
+      <section id="upcoming-section" class="glass panel">
+        <h3>Upcoming Projects</h3>
+        <ul id="upcoming-projects" class="project-list"></ul>
+      </section>
+    </main>
 
-  <!-- Password Popup -->
-  <div id="password-popup" class="glass hidden">
-    <h3>Enter Password</h3>
-    <input type="password" id="password-input" placeholder="Password">
-    <button id="password-submit">Submit</button>
-    <button id="password-cancel">Cancel</button>
-  </div>
-
-  <!-- Footer -->
-   <footer class="glass">
+     <footer class="glass">
         <p>Made with ❤️ by Vincenzo</p>
         <p>Make sure to refresh for an accurate status as it updates automatically and manually</p>
       <p style="font-size:.8rem; opacity:.8">I translated it into english for anyone without an italian IP ❤️ (I am so kind)</p>
     </footer>
+  <!-- PASSWORD MODAL -->
+  <div id="password-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-glass">
+      <h3>Enter password</h3>
+      <input id="password-input" type="password" placeholder="Password" autocomplete="off" />
+      <div class="modal-actions">
+        <button id="password-ok">Submit</button>
+        <button id="password-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <!-- MANUAL PANEL (set status) -->
+  <div id="manual-panel" class="manual-panel hidden" aria-hidden="true">
+    <div class="manual-glass">
+      <label for="manual-select">Set status</label>
+      <select id="manual-select">
+        <option value="">-- Select --</option>
+        <option>Online</option>
+        <option>Sleeping</option>
+        <option>At School</option>
+        <option>On Break</option>
+        <option>Offline</option>
+      </select>
+      <button id="manual-set">Set</button>
+      <button id="manual-reset">Back to Auto</button>
+    </div>
+  </div>
 
-  <!-- Main Script -->
   <script src="script.js"></script>
 </body>
 </html>
+
 
  
