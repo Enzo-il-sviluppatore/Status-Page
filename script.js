@@ -46,8 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 500);
 
   // load demo projects (replace with firebase later if desired)
-  ["IFE system","Grill UI","Status Site"].forEach(p => { const li=document.createElement("li");li.textContent=p;currList.appendChild(li);});
-  ["Flight Tracker","Live Check-in System"].forEach(p => { const li=document.createElement("li");li.textContent=p;upList.appendChild(li);});
+  ["IFE system (Roblox)","Maura Training Center (Roblox)","Manifest Event Center (Roblox)","AiChai Cafe Training Center (Roblox)","Bar de Milano Ordering and Payment System (real life/non Roblox)"].forEach(p => { const li=document.createElement("li");li.textContent=p;currList.appendChild(li);});
+  ["Amen Itliano Gioielli AI Customer Support/Booking (real life/non Roblox)","Confidential (real life/non Roblox)"].forEach(p => { const li=document.createElement("li");li.textContent=p;upList.appendChild(li);});
 
   // hide loader then show main (fully remove loader to avoid blocking)
   setTimeout(() => {
