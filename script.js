@@ -29,6 +29,7 @@ setTimeout(() => {
     document.querySelectorAll('.container, footer, header, main').forEach(el => {
       el.classList.remove('hidden');
     });
+    document.getElementById('projects-section').classList.remove('hidden'); // Show projects
   }, 800);
 }, 2000);
 
@@ -41,10 +42,15 @@ const passwordInput = document.getElementById('password-input');
 
 // Password system
 const PASSWORD = "test123";
-enzoStatusText.addEventListener('click', () => {
-  passwordPopup.classList.remove('hidden');
-  passwordPopup.style.zIndex = "99999"; // make sure it’s clickable
+
+// Trigger password popup from both heading and status text
+[enzoStatusText, statusText].forEach(el => {
+  el.addEventListener('click', () => {
+    passwordPopup.classList.remove('hidden');
+    passwordPopup.style.zIndex = "99999";
+  });
 });
+
 document.getElementById('password-submit').addEventListener('click', () => {
   if (passwordInput.value === PASSWORD) {
     passwordPopup.classList.add('hidden');
@@ -105,7 +111,6 @@ function checkSchedule() {
     }
   }
 
-  // If no nextChange found today, take first schedule tomorrow
   if (!nextChange) {
     const [hours, minutes] = schedule[0].time.split(":").map(Number);
     nextChange = new Date(now);
