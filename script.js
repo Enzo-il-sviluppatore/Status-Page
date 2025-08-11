@@ -100,8 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Schedule for auto (EST times)
   const schedule = [
-    { time: "06:30", status: "Online" },   // example wake time
-    { time: "07:00", status: "At School" },
+    { time: "06:25", status: "Online" },   // example wake time
+    { time: "07:40", status: "At School" },
     { time: "15:50", status: "Sports" },
     { time: "18:00", status: "Offline" },
     { time: "19:30", status: "Online" },
