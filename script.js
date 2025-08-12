@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 500);
 
   ["IFE system (Roblox)","Maura Training Center (Roblox)","Manifest Event Center (Roblox)","AiChai Cafe Training Center (Roblox)","Bar de Milano Ordering and Payment System (real life/non Roblox)"].forEach(p => { const li=document.createElement("li");li.textContent=p;currList.appendChild(li);});
-  ["Amen Itliano Gioielli AI Customer Support/Booking (real life/non Roblox)","Confidential (real life/non Roblox)"].forEach(p => { const li=document.createElement("li");li.textContent=p;upList.appendChild(li);});
+  ["Leonardo Campo Gioielli AI Customer Support/Booking (real life/non Roblox)","Confidential (real life/non Roblox)"].forEach(p => { const li=document.createElement("li");li.textContent=p;upList.appendChild(li);});
 
   setTimeout(() => {
     clearInterval(dotInterval);
