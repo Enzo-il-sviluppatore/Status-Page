@@ -88,9 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const schedule = [
-    { time: "06:25", status: "Online" },   
-    { time: "07:40", status: "At School" },
-    { time: "15:50", status: "Sports" },
+    { time: "06:45", status: "At School" },
+    { time: "14:50", status: "Sports" },
     { time: "18:00", status: "Offline" },
     { time: "19:30", status: "Online" },
     { time: "21:00", status: "Sleeping" }
